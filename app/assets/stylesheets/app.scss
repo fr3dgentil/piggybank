@@ -1,0 +1,51 @@
+// Place all the styles related to the App controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#no_transactions_message {
+	margin-top: 30px;
+}
+
+.tables_titles {
+display:inline;
+}
+
+.transactions_table table {
+	margin-top: 10px;
+}
+
+#date_title {
+	position: relative;
+	/*margin-bottom: px;*/
+}
+
+#menu_top_top p {
+	margin: 0;
+}
+
+#hr_top_page_index {
+	margin: 25px 0;
+}
+
+.row_date {
+	width: 150px;
+}
+
+.row_description {
+	width: 350px;
+}
+
+.row_amount {
+	text-align: right;
+	width: 100px;
+}
+
+.row_alter {
+	text-align: right;
+	width: 100px;
+}
+
+#add_button {
+	position: relative;
+	top: -10px;
+	}

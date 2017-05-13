@@ -1,0 +1,37 @@
+<h2 class="page_title treed">Categories</h2>
+<p>There is a default category called <i>Others</i>.</p>
+<!-- Alter Categories -->
+<% @categories.each do |c| %>
+	<%= form_tag(:action => 'save_category', :back => params[:back], :date => params[:date], :to => params[:to], :view => params[:view]) do %>
+
+		<%= text_field_tag('name', c.name) %>
+		<%= submit_tag('Alter') %>
+
+		<%= link_to('&uarr;'.html_safe, {:action => 'move_category', :move_up => c.position, :id => params[:id], :back => params[:back], :date => params[:date], :to => params[:to], :view => params[:view]}, :class => 'button')  %>
+
+		<%= link_to('&darr;'.html_safe, {:action => 'move_category', :move_down => c.position, :id => params[:id], :back => params[:back], :date => params[:date], :to => params[:to], :view => params[:view]}, :class => 'button')  %>
+
+		<%= hidden_field_tag('id', c.id) %>
+		
+		<%= link_to('Delete', {:action => 'delete_category', :back => params[:back], :id => c.id, :date => params[:date], :to => params[:to], :view => params[:view]}, :class => "button") %>
+
+
+	<% end %>
+<% end %>
+<!-- New Category -->
+<%= form_tag(:action => 'save_category', :back => params[:back], :date => params[:date], :to => params[:to], :view => params[:view]) do %>
+	<%= label_tag('new') %>
+	<%= text_field_tag('new') %>
+	<%= hidden_field_tag('id', '') %>
+	<%= submit_tag('Add', :class=>'button-primary') %>
+<% end %>
+
+<% if params['back'].present? %>
+	<% if params[:back] == 'options' %>
+	<p><%= link_to('Back', :controller => 'user', :action => 'options', :id => params[:id], :date => params[:date], :to => params[:to], :view => params[:view]) %></p>
+	<% elsif params[:back] == 'transaction_form' %>
+	<p><%= link_to('Back', :action => 'transaction_form', :id => params[:id], :date => params[:date], :to => params[:to], :view => params[:view]) %></p>
+	<% end %>
+<% else %>
+	<p><%= link_to('Back', :controller => 'app', :action => 'index', :id => params[:id], :date => params[:date], :to => params[:to], :view => params[:view]) %></p>
+<% end %>

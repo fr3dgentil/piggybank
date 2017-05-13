@@ -1,0 +1,99 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+.treed {
+	color: white;
+	text-shadow: 
+		0 1px 0 #ccc,
+		0 2px 0 #c9c9c9,
+		0 3px 0 #bbb,
+		0 4px 0 #b9b9b9,
+		0 5px 0 #aaa,
+		0 6px 1px rgba(0,0,0,.1),
+		0 0 5px rgba(0,0,0,.1),
+		0 1px 3px rgba(0,0,0,.3),
+		0 3px 5px rgba(0,0,0,.2),
+		0 5px 10px rgba(0,0,0,.25),
+		0 10px 10px rgba(0,0,0,.2),
+		0 20px 20px rgba(0,0,0,.15);	
+}
+
+/* Larger than 550px */
+@media (min-width: 550px) {
+
+	.align_right {
+		text-align: right;
+	}
+}
+
+
+@font-face {
+    font-family: 'Stellar-Regular';
+    src:url('fonts/Stellar-Regular.otf');
+}
+
+body {
+	margin-top: 6px;
+	font-family: 'Lato-Regular';
+	font-size: 1.4em;
+	padding-bottom: 20px;
+	color: #323232;
+}
+
+td, th {
+	padding: 2px;
+	padding-bottom: 2px;
+}
+
+form {
+	margin: 0;
+}
+
+.green_text {
+	color: green;
+}
+
+.red_text, .red_text a {
+	color: red;
+}
+
+tr:hover {
+	background-color: #f8f8f8;
+}
+
+thead th {
+	background-color: white;
+}
+
+tfoot th {
+	background-color: white;
+}
+
+h3 {
+	position: relative;
+	top: -5px;
+}
+
+.flash_success {
+}
+
+.flash_error {
+}
+
+.page_title {
+	margin-top: 20px;
+	margin-bottom: 25px;
+}

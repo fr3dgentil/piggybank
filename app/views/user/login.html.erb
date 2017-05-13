@@ -1,0 +1,12 @@
+<h1 id="login_h1" class="treed">Piggy Bank</h1>
+
+<%= form_for(:user) do |f| %>
+<%= f.label(:username) %>
+<%= f.text_field(:username, :autofocus=>true) %>
+<%= f.label('password') %>
+<%= f.password_field('password') %><br>
+<%= f.submit('Login', :class => 'button-primary') %>
+<% end %>
+<hr>
+<%= link_to('Register', :action => 'new_user') %> - 
+<%= link_to('About', :action => 'about') %>

@@ -1,0 +1,138 @@
+<!-- Header -->
+<div class="row">
+    <div class="ten columns">
+		<p>
+		<b>View:</b> 
+		<%= params[:date] == @today.strftime("%Y") ? 'This Year' : 
+		link_to('This Year', :date => @today.strftime("%Y"), :view => params[:view]) %> |
+		<%= params[:date] == @today.strftime("%Y-%m") || params[:date].nil? ? 'This Month' :
+		 link_to('This Month', :date => @today.strftime("%Y-%m"), :view => params[:view]) %> |
+		<%= @title == 'This Week' ? 'This Week' :
+		 link_to('This Week', :date => @today.at_beginning_of_week.strftime("%Y-%m-%d"), 
+		 :to => @today.at_end_of_week.strftime("%Y-%m-%d"), :view => params[:view]) %> |
+		<%= params[:date] == @today.strftime("%Y-%m-%d") && params[:to].nil? ? 'Today' : 
+		link_to('Today', :date => @today.strftime("%Y-%m-%d"), :view => params[:view]) %> |
+		
+		<b>By: </b>
+		<%= params[:view] == '1' || params[:view].nil? ? 'Categories' : 
+		link_to('Categories', :view => '1', :date => params[:date], :to => params[:to]) %> | 
+
+		<%= params[:view] == '2' ? 'In/Out' : 
+		link_to('In/Out', :view => '2', :date => params[:date], :to => params[:to]) %> | 
+
+		<%= params[:view] == '3' ? 'Simple' : 
+		link_to('Simple', :view => '3', :date => params[:date], :to => params[:to]) %>
+		</p> 	
+    </div>
+
+    <div class="two columns align_right">
+		<p>
+		<%= link_to(session[:user_username], :controller => 'user', :action => 'options', :date => params[:date], :to => params[:to], :view => params[:view]) %> |
+		<%= link_to('Logout', :controller => 'user', :action => 'logout', :logout => true) %>
+		</p>
+	</div>
+</div>
+
+<h2 id="date_title">
+	<small><%= link_to('<<', {:date => @last_date, :to => @last_to, :view => params[:view]}, html_options = {:class => 'button', :id => 'add_button'}) if @last_date.present? %></small>
+	<%= @title %>
+	<small><%= link_to('>>', {:date => @next_date, :to => @next_to, :view => params[:view]}, html_options = {:class => 'button', :id => 'add_button'}) if @next_date.present? %>
+	</small>
+	
+	<%= link_to('Add', {:action => 'transaction_form', :id => params[:id], :view => params[:view], :date => params[:date], :to => params[:to]}, html_options = {:class => 'button', :id => 'add_button'}) %>
+	
+</h2>
+
+<!-- <hr id="hr_top_page_index"> -->
+
+<!-- Content -->
+<% #If there is at least one transaction %>
+<% if @transactions.count > 0 %>
+
+	<!-- Graph -->
+	<% if params[:view] != '3' %>
+		<div id="graph"></div>
+	<% end %>
+
+
+	<% @transactions_hash.each do |category, transactions| %>
+
+		<% #If there is at least one transaction in this category %>
+		<% if transactions.count != 0 %>
+
+			<% total_amount = 0 #Reset %>
+
+			<div class="transactions_table">
+
+			<h4 class="tables_titles"><%= category if params[:view] == '2' %>
+				<% '' if params[:view] == '3' %>
+				<%= @categories.select{|c| c['id'] == category}.empty? ? 'Others' : 
+				@categories.select{|c| c['id'] == category}.first.name if params[:view] == '1' || params[:view].nil? %></h4>
+			
+				<table class="u-full-width">
+	
+					<thead>
+						<tr><th>Date</th>
+						<th>Description</th>
+						<th class="row_amount">Amount</th>
+						<th></th></tr>
+					</thead>
+					
+					<tbody>
+					<% transactions.each do |transaction| %>
+
+						<% #We add the amount of the transaction to the variable total_amount %>
+						<% total_amount = total_amount + transaction.amount.to_d %>
+
+						<tr><td class="row_date"><%= transaction.date %></td>
+
+						<td class="row_description"><%= transaction.description %></td>
+						
+						<td class="row_amount">
+						<% if transaction.amount.to_s[0,1] == '-' %><div class="red_text">
+						<% else %><div class="green_text"><% end %>
+						<%= number_with_precision(transaction.amount, :precision => 2) %></div></td>
+
+						<td class="row_alter"><small><%= link_to('Alter', :action => 'transaction_form', 
+						:id => transaction.id, :date => params[:date], :to => params[:to], :view => params[:view]) %></small></td></tr>
+					<% end %>
+					</tbody>
+
+					<tfoot>
+						<tr>
+						<th><b><%= link_to('Add', {:action => 'transaction_form', 
+							:category => category, :id => params[:id], :view => params[:view], 
+							:date => params[:date], :to => params[:to]}) if params[:view].to_i != 3 %></b></th>
+						<th></th>
+						<th class="row_amount big_total">$<%= number_with_precision(total_amount, :precision => 2) %></th>
+						<th></th>
+						</tr>
+					</tfoot>
+
+				</table>
+			</div>
+		
+		<% #We add the total of the table to the variable bit_total_amount %>
+		<% @big_total_amount = @big_total_amount + total_amount %>
+		<% end %>
+
+	<% end %>
+
+	<% if params[:view] != '3' && @not_empty_categories_count > 1 #Not the simple view and more than 1 table %>
+		<h4>Scale: $<%= number_with_precision(@big_total_amount, :precision => 2) %></h4>
+	<% end %>
+
+<% #Else, it mean that there is no transactions %>
+<% else %>
+
+	<% if flash[:new_account] %>
+		<p id="new_account_message">Congratulation, you successfully created your account ! Now click on the <b>Add</b> link on the top left corner of the screen to begin.</p>
+	<% else %>
+
+	<hr>
+		<p id="no_transactions_message">There is no transactions for this date.</p>
+
+	<% end %>
+
+	<hr>
+<% end %>

@@ -1,0 +1,7 @@
+<h2 class="red_text page_title">Delete my account</h2>
+
+<p>Are you sure?</p>
+
+<%= link_to('<button class="button-primary">'.html_safe + 'Yes' + '</button>'.html_safe, :action => 'delete_account_confirmation', :confirmation => 'yes') %>
+
+<%= link_to('<button>'.html_safe + 'No' + '</button>'.html_safe, :action => 'options', :date => params[:date], :to => params[:to], :view => params[:view]) %>

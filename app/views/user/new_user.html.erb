@@ -1,0 +1,15 @@
+<h1 id="login_h1" class="treed">Piggy Bank</h1>
+<h2 class="treed page_title">New Account : </h2>
+<%= form_for(:new_user) do |f| %>
+<%= f.label(:username) %>
+<%= f.text_field(:username) %>
+<%= f.label(:password) %>
+<%= f.password_field(:password) %>
+<%= f.label(:password_confirmation) %>
+<%= f.password_field(:password_confirmation) %>
+<%= f.label(:email) %>
+<%= f.email_field(:email) %>
+<br><%= f.submit('Create my Account', :class => 'button-primary') %>
+<% end %>
+<hr>
+<%= link_to('Cancel', :action => 'login') %>

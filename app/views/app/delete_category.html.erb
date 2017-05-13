@@ -1,0 +1,17 @@
+<h2 class="page_title treed">Delete <i><%= @category.name %></i> category ?</h2>
+<p>This category has <b><%= @transactions_count %></b> <%= "transaction".pluralize(@transactions_count) %>.</p>
+
+<%= form_tag(:action => 'delete_category', :id => params[:id], :delete => 'yes', :transfer_transactions => 'yes', :date => params[:date], :to => params[:to], :view => params[:view]) do |f| %>
+	Delete category <i><%= @category.name %></i> and <b>transfer</b> his <%= "transaction".pluralize(@transactions_count) %> to:
+	<%= select_tag "category_id", options_from_collection_for_select(@categories, "id", "name"), :include_blank => 'Other' %>
+	<%= submit_tag 'Delete and Transfer' %>
+<% end %>
+
+<%= form_tag(:action => 'delete_category', :id => params[:id], :delete => 'yes', :transfer_transactions => 'no', :date => params[:date], :to => params[:to], :view => params[:view]) do |f| %>
+	Delete category <i><%= @category.name %></i> and <b>delete</b> his <%= "transaction".pluralize(@transactions_count) %>
+	<%= submit_tag 'Delete' %>
+<% end %>
+
+<p class="red_text">You can't undo this.</p>
+
+<%= link_to('Back', :action => 'categories', :id=> params[:id], :date => params[:date], :to => params[:to], :view => params[:view]) %>

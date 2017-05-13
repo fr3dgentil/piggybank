@@ -1,0 +1,18 @@
+<h2 class="treed page_title">My account (<%= session[:user_username] %>)</h2>
+
+<p>
+Email: <%= @user.email %>
+<%= link_to('Alter', :action => 'alter_email', :date => params[:date], :to => params[:to], :view => params[:view]) %>
+</p>
+
+<p>Stats: <%= pluralize(@user.categories.count, 'category') %>, <%= pluralize(@user.transactions.count, 'transaction') %></p>
+
+<p><%= link_to('Manage Categories', :controller => 'app', :action => 'categories', :back=>'options', :date => params[:date], :to => params[:to], :view => params[:view]) %></p>
+
+<p><%= link_to('Change Password', :action => 'alter_password', :back=>'options', :date => params[:date], :to => params[:to], :view => params[:view]) %></p>
+
+<p>Member since: <%= @user.created_at.strftime("%B %e, %Y") %></p>
+
+<p class="red_text"><%= link_to('Delete My Account', :action => 'delete_account', :date => params[:date], :to => params[:to], :view => params[:view]) %></p>
+<hr>
+<p><%= link_to('Back', :controller => 'app', :action => 'index', :date => params[:date], :to => params[:to], :view => params[:view]) %></p>

@@ -1,0 +1,9 @@
+<h3 class="red_text page_title">Delete my account</h3>
+
+<%= form_tag(:action => 'delete_account') do %>
+<%= label_tag(:password) %>
+<%= password_field_tag(:password) %>
+<%= submit_tag('Delete my account') %>
+<% end %>
+
+<p><%= link_to('Cancel', :action => 'options', :date => params[:date], :to => params[:to], :view => params[:view]) %></p>

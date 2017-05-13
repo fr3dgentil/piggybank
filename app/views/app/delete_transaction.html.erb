@@ -1,0 +1,9 @@
+<h2 class="page_title treed">Delete <i><%= @transaction.description %></i> ?</h2>
+<p><b>Date: </b><%= @transaction.date %>,
+<b>Amount: </b>$<%= @transaction.amount %>,
+<b>Category: </b><%= @transaction.category.present? ? @transaction.category.name : 'Other' %></p>
+
+<p>
+<b><%= link_to('Yes', :action => 'delete_transaction', :id => params[:id], :delete => 'yes', :date => params[:date], :to => params[:to], :view => params[:view]) %></b> | 
+<%= link_to('No', :action => 'transaction_form', :id=> params[:id], :date => params[:date], :to => params[:to], :view => params[:view]) %>
+</p>

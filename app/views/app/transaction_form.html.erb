@@ -1,0 +1,41 @@
+<h2 class="treed page_title"><%= params[:id].present? ? "Transaction: #{@transaction.description}" : 'Add a Transaction' %></h2>
+
+<%= form_for(:transaction, :url =>{:action => 'save_transaction', :date => params[:date], :to => params[:to], :view => params[:view]}) do |t| %>
+
+	<%= t.hidden_field(:user_id, value: @user_id) %>
+	<%= t.hidden_field(:transaction_id, value: params['id']) %>
+
+	<!-- Data field -->
+	<%= t.label(:date, "Date:") %>
+	<%= t.date_select(:date) %>
+	
+	<!-- Description field -->
+	<%= t.label(:description, "Description:") %>
+	<%= t.text_field(:description) %>
+
+	<!-- Amount field -->
+	<%= t.label(:amount, "Amount:") %> 
+	<%= t.number_field(:amount, :placeholder => 'ex: -10,23', :step => 0.01)%> $
+
+	<!-- Category field -->
+	<%= t.label(:category, "Category:") %>
+	<%= t.select(:category_id, @categories.map{ |c| [c.name, c.id]}, :include_blank => 'Other') %>
+
+	<!-- Manage category -->
+	<%= link_to('Manage Categories', {:action => 'categories', :back => 'transaction_form', :id => params[:id], :date => params[:date], :to => params[:to], :view => params[:view]}, html_options = {:class => 'button'}) %>
+	
+	<br>
+	
+	<!-- Save button -->
+	<%= t.submit('Apply', :class => 'button-primary') if params[:id].present? %>
+	<%= t.submit('Save Transaction', :class => 'button-primary') if !params[:id].present? %>
+
+	<!-- Delete button -->
+	<%= params[:id].present? ? link_to('Delete', {:action => 'delete_transaction', :id => params[:id], :date => params[:date], 
+		:to => params[:to], :view => params[:view]}, :class=>'button') : '' %> 
+
+<% end %>
+
+<hr>
+
+<p><%= link_to('Cancel', :action => 'index', :date => params[:date], :to => params[:to], :view => params[:view]) %></p>

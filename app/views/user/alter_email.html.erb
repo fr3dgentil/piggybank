@@ -1,0 +1,13 @@
+<h2 class="treed page_title">Alter Email</h2>
+
+<p>Your current email is <i><%= @email %></i></p>
+
+<%= form_tag(:action => 'alter_email', :date => params[:date], :to => params[:to], :view => params[:view]) do %>
+<%= label_tag(:email) %>
+<%= email_field_tag(:email) %>
+<%= label_tag(:password, 'Enter your password') %>
+<%= password_field_tag(:password) %><br>
+<%= submit_tag('Change Email', :class => 'button-primary') %>
+<% end %>
+
+<p><%= link_to('Back', :action => 'options', :date => params[:date], :to => params[:to], :view => params[:view]) %></p>
